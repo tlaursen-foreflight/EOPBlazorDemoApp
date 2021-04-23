@@ -1,0 +1,12 @@
+C:\dev\test-app\Test app\ServiceLayer\bin\Debug\netcoreapp3.1\ServiceLayer.deps.json
+C:\dev\test-app\Test app\ServiceLayer\bin\Debug\netcoreapp3.1\ServiceLayer.runtimeconfig.json
+C:\dev\test-app\Test app\ServiceLayer\bin\Debug\netcoreapp3.1\ServiceLayer.runtimeconfig.dev.json
+C:\dev\test-app\Test app\ServiceLayer\bin\Debug\netcoreapp3.1\ServiceLayer.dll
+C:\dev\test-app\Test app\ServiceLayer\bin\Debug\netcoreapp3.1\ServiceLayer.pdb
+C:\dev\test-app\Test app\ServiceLayer\obj\Debug\netcoreapp3.1\ServiceLayer.csprojAssemblyReference.cache
+C:\dev\test-app\Test app\ServiceLayer\obj\Debug\netcoreapp3.1\ServiceLayer.AssemblyInfoInputs.cache
+C:\dev\test-app\Test app\ServiceLayer\obj\Debug\netcoreapp3.1\ServiceLayer.AssemblyInfo.cs
+C:\dev\test-app\Test app\ServiceLayer\obj\Debug\netcoreapp3.1\ServiceLayer.csproj.CoreCompileInputs.cache
+C:\dev\test-app\Test app\ServiceLayer\obj\Debug\netcoreapp3.1\ServiceLayer.dll
+C:\dev\test-app\Test app\ServiceLayer\obj\Debug\netcoreapp3.1\ServiceLayer.pdb
+C:\dev\test-app\Test app\ServiceLayer\obj\Debug\netcoreapp3.1\ServiceLayer.genruntimeconfig.cache

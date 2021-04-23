@@ -1,0 +1,93 @@
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\appsettings.json
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Test app.exe
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Test app.deps.json
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Test app.runtimeconfig.json
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Test app.runtimeconfig.dev.json
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Test app.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Test app.pdb
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Test app.Views.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Test app.Views.pdb
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.csprojAssemblyReference.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.AssemblyInfoInputs.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.AssemblyInfo.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.csproj.CoreCompileInputs.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.MvcApplicationPartsAssemblyInfo.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.RazorComponent.input.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\App.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Counter.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\FetchData.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Index.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\MainLayout.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\NavMenu.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\SurveyPrompt.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\_Imports.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.RazorComponent.output.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Test app.dll
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.TagHelpers.input.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.TagHelpers.output.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.RazorCoreGenerate.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\App.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Pages\Counter.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Pages\FetchData.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Pages\Index.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Shared\MainLayout.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Shared\NavMenu.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Shared\SurveyPrompt.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\_Imports.razor.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Pages\Error.cshtml.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Pages\_Host.cshtml.g.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.RazorAssemblyInfo.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.RazorAssemblyInfo.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\staticwebassets\Test app.StaticWebAssets.Manifest.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\staticwebassets\Test app.StaticWebAssets.xml
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\scopedcss\bundle\Test app.styles.css
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.RazorTargetAssemblyInfo.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.RazorTargetAssemblyInfo.cs
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.Views.pdb
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.dll
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.pdb
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.genruntimeconfig.cache
+C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.csproj.CopyComplete
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Humanizer.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Memory.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\System.ComponentModel.Annotations.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.pdb
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.pdb
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.pdb
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
