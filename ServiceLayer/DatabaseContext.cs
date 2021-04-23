@@ -6,6 +6,17 @@ namespace ServiceLayer
 {
     public class DatabaseContext : DbContext
     {
+        //Todo probably not the way to do this
+        private static string _username;
+        private static string _password;
+
+        public static void SetCredentials(string username, string password)
+        {
+            _password = password;
+            _username = username;
+        }
+        
+        
         public DatabaseContext()
         {
         }
@@ -14,6 +25,15 @@ namespace ServiceLayer
             : base(options)
         {
         }
+        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //todo move this to app settings
+            var connectionString = $"Server=dispatch-rds-qa.acqa.foreflight.com;Port=5432;Database=eopmaster;User Id={_username};Password={_password};";
+            optionsBuilder.UseNpgsql(connectionString);
+        }
+
+        
 
         public virtual DbSet<Airport> Airports { get; set; }
         public virtual DbSet<AnalysisRun> AnalysisRuns { get; set; }

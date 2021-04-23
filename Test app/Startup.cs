@@ -26,15 +26,14 @@ namespace Test_app
             services.AddServerSideBlazor();
             services.AddScoped<IDbService, DbService>();
 
-            //Generate packages with the following command in the package manager, set serviceLayer project as startup and target.
-            //Scaffold-DbContext "Server=dispatch-rds-qa.acqa.foreflight.com;Port=5432;Database=eopmaster;User Id=eopuser;Password=curlyLeop@rd87;" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir .\Models\
-            services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),
+            services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(
                 pgnsqlOptions =>
                 {
                     pgnsqlOptions.EnableRetryOnFailure();
                     pgnsqlOptions.SetPostgresVersion(new Version("9.6"));
                 }));
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

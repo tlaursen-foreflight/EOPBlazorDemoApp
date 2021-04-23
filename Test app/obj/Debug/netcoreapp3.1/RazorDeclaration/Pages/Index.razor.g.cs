@@ -90,6 +90,24 @@ using ServiceLayer;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 10 "C:\dev\test-app\Test app\Test app\Pages\Index.razor"
+ 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        //Todo better credentials prompting
+
+        var username = await _runtime.InvokeAsync<string>("prompt", "Database Username:");
+        var password = await _runtime.InvokeAsync<string>("prompt", "Database Password:");
+
+        DatabaseContext.SetCredentials(username, password);
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IJSRuntime _runtime { get; set; }
     }
 }
 #pragma warning restore 1591

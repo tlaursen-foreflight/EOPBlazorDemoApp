@@ -91,9 +91,9 @@ using ServiceLayer;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 8 "C:\dev\test-app\Test app\Test app\Pages\EOP.razor"
+#line 7 "C:\dev\test-app\Test app\Test app\Pages\EOP.razor"
        
-    private int EOPCount;
+    private int EOPCount = 0;
 
     protected override async Task OnInitializedAsync()
     {

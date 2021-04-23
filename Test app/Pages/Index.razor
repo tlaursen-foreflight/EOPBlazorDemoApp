@@ -1,5 +1,21 @@
 ﻿@page "/"
+@inject IJSRuntime _runtime
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+
+@code
+{
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        //Todo better credentials prompting
+
+        var username = await _runtime.InvokeAsync<string>("prompt", "Database Username:");
+        var password = await _runtime.InvokeAsync<string>("prompt", "Database Password:");
+
+        DatabaseContext.SetCredentials(username, password);
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}

@@ -18,7 +18,6 @@ C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\App.r
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Index.razor.g.cs
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\MainLayout.razor.g.cs
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\NavMenu.razor.g.cs
-C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\SurveyPrompt.razor.g.cs
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\_Imports.razor.g.cs
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Test app.RazorComponent.output.cache
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Test app.dll
@@ -29,7 +28,6 @@ C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\App.razor.g.cs
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Pages\Index.razor.g.cs
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Shared\MainLayout.razor.g.cs
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Shared\NavMenu.razor.g.cs
-C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Shared\SurveyPrompt.razor.g.cs
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\_Imports.razor.g.cs
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Pages\Error.cshtml.g.cs
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Pages\_Host.cshtml.g.cs
@@ -95,3 +93,5 @@ C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Microsoft.EntityFramew
 C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\Npgsql.EntityFrameworkCore.PostgreSQL.Design.dll
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\EOP.razor.g.cs
 C:\dev\test-app\Test app\Test app\obj\Debug\netcoreapp3.1\Razor\Pages\EOP.razor.g.cs
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\AWSSDK.Core.dll
+C:\dev\test-app\Test app\Test app\bin\Debug\netcoreapp3.1\AWSSDK.SecretsManager.dll
