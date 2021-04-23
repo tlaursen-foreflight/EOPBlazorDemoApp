@@ -7,5 +7,6 @@ namespace ServiceLayer
     public interface IDbService
     {
         public Task<List<EngineOutProcedure>> GetEOPs();
+        Task<int> EOPCount();
     }
 }

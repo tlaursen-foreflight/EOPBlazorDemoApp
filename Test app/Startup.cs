@@ -1,17 +1,11 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer;
-using Test_app.Data;
 
 namespace Test_app
 {
@@ -30,9 +24,16 @@ namespace Test_app
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
-            services.AddScoped<IDbService, DbServiceMock>();
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IDbService, DbService>();
+
+            //Generate packages with the following command in the package manager, set serviceLayer project as startup and target.
+            //Scaffold-DbContext "Server=dispatch-rds-qa.acqa.foreflight.com;Port=5432;Database=eopmaster;User Id=eopuser;Password=curlyLeop@rd87;" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir .\Models\
+            services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"),
+                pgnsqlOptions =>
+                {
+                    pgnsqlOptions.EnableRetryOnFailure();
+                    pgnsqlOptions.SetPostgresVersion(new Version("9.6"));
+                }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

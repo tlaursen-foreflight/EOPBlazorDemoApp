@@ -72,6 +72,13 @@ using Test_app.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 12 "C:\dev\test-app\Test app\Test app\_Imports.razor"
+using ServiceLayer;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
     {

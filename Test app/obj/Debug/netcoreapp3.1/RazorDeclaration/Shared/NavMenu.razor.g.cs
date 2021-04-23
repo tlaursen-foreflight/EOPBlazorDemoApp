@@ -75,6 +75,13 @@ using Test_app.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 12 "C:\dev\test-app\Test app\Test app\_Imports.razor"
+using ServiceLayer;
+
+#line default
+#line hidden
+#nullable disable
     public partial class NavMenu : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -83,7 +90,7 @@ using Test_app.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "C:\dev\test-app\Test app\Test app\Shared\NavMenu.razor"
+#line 23 "C:\dev\test-app\Test app\Test app\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 

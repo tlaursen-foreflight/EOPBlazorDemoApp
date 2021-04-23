@@ -1,0 +1,14 @@
+﻿@page "/eop"
+
+@inject IDbService _db;
+
+<h1>EOP COUNT: @EOPCount</h1>
+
+@code {
+    private int EOPCount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        EOPCount = await _db.EOPCount();
+    }
+}

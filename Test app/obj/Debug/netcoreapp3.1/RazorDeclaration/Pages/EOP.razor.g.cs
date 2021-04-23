@@ -76,14 +76,14 @@ using Test_app.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\dev\test-app\Test app\Test app\Pages\FetchData.razor"
-using Test_app.Data;
+#line 12 "C:\dev\test-app\Test app\Test app\_Imports.razor"
+using ServiceLayer;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/fetchdata")]
-    public partial class FetchData : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/eop")]
+    public partial class EOP : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -91,19 +91,19 @@ using Test_app.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 39 "C:\dev\test-app\Test app\Test app\Pages\FetchData.razor"
+#line 8 "C:\dev\test-app\Test app\Test app\Pages\EOP.razor"
        
-    private WeatherForecast[] forecasts;
+    private int EOPCount;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        EOPCount = await _db.EOPCount();
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private WeatherForecastService ForecastService { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IDbService _db { get; set; }
     }
 }
 #pragma warning restore 1591

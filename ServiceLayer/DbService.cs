@@ -5,7 +5,7 @@ using ServiceLayer.Models;
 
 namespace ServiceLayer
 {
-    public class DbService: IDbService
+    public class DbService : IDbService
     {
         private readonly DatabaseContext _context;
 
@@ -16,7 +16,12 @@ namespace ServiceLayer
 
         Task<List<EngineOutProcedure>> IDbService.GetEOPs()
         {
-            return _context.EOPS.ToListAsync();
+            return _context.EngineOutProcedures.ToListAsync();
+        }
+
+        public Task<int> EOPCount()
+        {
+            return _context.EngineOutProcedures.CountAsync();
         }
     }
 }
