@@ -1,0 +1,57 @@
+
+.vs/Test app/config/applicationhost.config
+.vs/Test app/v16/.suo
+ServiceLayer/bin/Debug/netcoreapp3.1/ServiceLayer.dll
+ServiceLayer/bin/Debug/netcoreapp3.1/ServiceLayer.pdb
+ServiceLayer/bin/Debug/netcoreapp3.1/ServiceLayer.runtimeconfig.dev.json
+ServiceLayer/obj/Debug/netcoreapp3.1/ServiceLayer.assets.cache
+ServiceLayer/obj/Debug/netcoreapp3.1/ServiceLayer.csproj.AssemblyReference.cache
+ServiceLayer/obj/Debug/netcoreapp3.1/ServiceLayer.csproj.CoreCompileInputs.cache
+ServiceLayer/obj/Debug/netcoreapp3.1/ServiceLayer.csproj.FileListAbsolute.txt
+ServiceLayer/obj/Debug/netcoreapp3.1/ServiceLayer.dll
+ServiceLayer/obj/Debug/netcoreapp3.1/ServiceLayer.genruntimeconfig.cache
+ServiceLayer/obj/Debug/netcoreapp3.1/ServiceLayer.pdb
+ServiceLayer/obj/project.assets.json
+ServiceLayer/obj/project.nuget.cache
+ServiceLayer/obj/ServiceLayer.csproj.nuget.dgspec.json
+ServiceLayer/obj/ServiceLayer.csproj.nuget.g.props
+Test app/bin/Debug/netcoreapp3.1/ServiceLayer.dll
+Test app/bin/Debug/netcoreapp3.1/ServiceLayer.pdb
+Test app/bin/Debug/netcoreapp3.1/Test app.deps.json
+Test app/bin/Debug/netcoreapp3.1/Test app.dll
+Test app/bin/Debug/netcoreapp3.1/Test app.exe
+Test app/bin/Debug/netcoreapp3.1/Test app.pdb
+Test app/bin/Debug/netcoreapp3.1/Test app.runtimeconfig.dev.json
+Test app/bin/Debug/netcoreapp3.1/Test app.Views.dll
+Test app/bin/Debug/netcoreapp3.1/Test app.Views.pdb
+Test app/obj/Debug/netcoreapp3.1/apphost.exe
+Test app/obj/Debug/netcoreapp3.1/Razor/_Imports.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/Razor/App.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/Razor/Pages/_Host.cshtml.g.cs
+Test app/obj/Debug/netcoreapp3.1/Razor/Pages/EOP.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/Razor/Pages/Error.cshtml.g.cs
+Test app/obj/Debug/netcoreapp3.1/Razor/Pages/Index.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/Razor/Shared/MainLayout.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/Razor/Shared/NavMenu.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/RazorDeclaration/_Imports.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/RazorDeclaration/App.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/RazorDeclaration/Pages/EOP.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/RazorDeclaration/Pages/Index.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/RazorDeclaration/Shared/MainLayout.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/RazorDeclaration/Shared/NavMenu.razor.g.cs
+Test app/obj/Debug/netcoreapp3.1/RazorDeclaration/Test app.dll
+Test app/obj/Debug/netcoreapp3.1/RazorDeclaration/Test app.pdb
+Test app/obj/Debug/netcoreapp3.1/Test app.assets.cache
+Test app/obj/Debug/netcoreapp3.1/Test app.csproj.AssemblyReference.cache
+Test app/obj/Debug/netcoreapp3.1/Test app.csproj.CoreCompileInputs.cache
+Test app/obj/Debug/netcoreapp3.1/Test app.csproj.FileListAbsolute.txt
+Test app/obj/Debug/netcoreapp3.1/Test app.dll
+Test app/obj/Debug/netcoreapp3.1/Test app.genruntimeconfig.cache
+Test app/obj/Debug/netcoreapp3.1/Test app.pdb
+Test app/obj/Debug/netcoreapp3.1/Test app.Views.dll
+Test app/obj/Debug/netcoreapp3.1/Test app.Views.pdb
+Test app/obj/project.assets.json
+Test app/obj/project.nuget.cache
+Test app/obj/Test app.csproj.nuget.dgspec.json
+Test app/obj/Test app.csproj.nuget.g.props
+Test app/Test app.csproj.user
