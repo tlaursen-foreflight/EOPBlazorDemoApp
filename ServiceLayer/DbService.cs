@@ -14,9 +14,19 @@ namespace ServiceLayer
             _context = context;
         }
 
-        Task<List<EngineOutProcedure>> IDbService.GetEOPs()
+        public Task<List<EngineOutProcedure>> GetEops()
         {
-            return _context.EngineOutProcedures.ToListAsync();
+            return _context.EngineOutProcedures.Include(eop => eop.Runway.Airport).ToListAsync();
+        }
+
+        public Task<List<Airport>> GetAirports()
+        {
+            return _context.Airports.ToListAsync();
+        }
+
+        public Task<List<Runway>> GetRunways()
+        {
+            return _context.Runways.ToListAsync();
         }
 
         public Task<int> EOPCount()

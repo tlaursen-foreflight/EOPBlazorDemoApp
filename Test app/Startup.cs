@@ -6,6 +6,9 @@ using Microsoft.Extensions.Hosting;
 using System;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 
 namespace Test_app
 {
@@ -25,6 +28,10 @@ namespace Test_app
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<IDbService, DbService>();
+
+            services.AddBlazorise(options => { options.ChangeTextOnKeyPress = true; })
+                    .AddBootstrapProviders()
+                    .AddFontAwesomeIcons();
 
             services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(
                 pgnsqlOptions =>

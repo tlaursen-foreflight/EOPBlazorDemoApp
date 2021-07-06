@@ -4,11 +4,203 @@
 
 <h1>EOP COUNT: @EOPCount</h1>
 
+<Button Clicked="@(async () => await RedrawGraphs())">Update</Button>
+
+<div>
+    <table width="100%">
+        <tr>
+            <th width="50%"><LineChart @ref="createdReviewedLineChart" TItem="int" /></th>
+            <th width="50%"><BarChart @ref="createdReviewedBarChart" TItem="int" /></th>
+        </tr>
+        <tr>
+            <th width="50%"><LineChart @ref="airportsWithEopsLineChart" TItem="int" /></th>
+            <th width="50%"><BarChart @ref="regionalCoveragesBarChart" TItem="int" /></th>
+        </tr>
+    </table>
+</div>
+
+
 @code {
+    @using ServiceLayer.Models
+    @using System.Globalization
+
     private int EOPCount = 0;
+
+    LineChart<int> createdReviewedLineChart;
+    BarChart<int> createdReviewedBarChart;
+    LineChart<int> airportsWithEopsLineChart;
+    BarChart<int> regionalCoveragesBarChart;
+
+    private List<string> LabelListWeeks = new List<string>();
+    private List<string> LabelListRegions = new List<string> { "US", "CAN", "EUR", "SA", "Rest of World" };
+
+    private List<int> CreatedCount = new List<int>();
+    private List<int> ReviewedCount = new List<int>();
+    private List<int> CreatedPerWeek = new List<int>();
+    private List<int> ReviewedPerWeek = new List<int>();
+    private List<int> AirportsWithEopsCount = new List<int>();
+    private Dictionary<string, int> RegionalCoverages = new Dictionary<string, int>();
 
     protected override async Task OnInitializedAsync()
     {
-        EOPCount = await _db.EOPCount();
+        await updateData();
+
+        await RedrawGraphs();
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await RedrawGraphs();
+        }
+    }
+
+    private async Task updateData()
+    {
+        List<EngineOutProcedure> eops = await _db.GetEops();
+
+        EOPCount = eops.Count();
+
+        DateTime startDate = eops.Select(x => x.CreatedOn).Min();
+        DateTime latestDate = new DateTime(Math.Max(eops.Select(x => x.CreatedOn).Max().Ticks, eops.Select(x => x.ReviewedOn).Max()?.Ticks ?? 0));
+
+        startDate = startDate.AddDays(-((int)startDate.DayOfWeek - 1));   // Reduce date to previous monday at 00:00
+        while (startDate < latestDate)
+        {
+            startDate = startDate.AddDays(7);
+
+            var createdEopsSoFar = eops.Where(e => e.CreatedOn < startDate).ToList();
+            var newCreatedEopsCount = createdEopsSoFar.Count() - CreatedCount.LastOrDefault();
+            CreatedCount.Add(createdEopsSoFar.Count());
+            CreatedPerWeek.Add(newCreatedEopsCount);
+
+            var reviewedEopsSoFar = eops.Where(e => e.ReviewedOn < startDate).ToList();
+            var newReviewedEopsCount = reviewedEopsSoFar.Count() - ReviewedCount.LastOrDefault();
+            ReviewedCount.Add(reviewedEopsSoFar.Count());
+            ReviewedPerWeek.Add(newReviewedEopsCount);
+
+            var airportsWithEops = reviewedEopsSoFar.GroupBy(eop => eop.Runway.Airport).ToList();
+            AirportsWithEopsCount.Add(airportsWithEops.Count());
+
+            LabelListWeeks.Add(startDate.ToString("yy") + " w" + ISOWeek.GetWeekOfYear(startDate));
+        }
+
+        LabelListRegions.ForEach(region => RegionalCoverages.Add(region, 0));
+        var eopIcaos = eops.Where(e => e.ReviewedOn != null).Select(e => e.Runway).Select(r => r.Airport.Icao).ToList();
+        foreach (var icao in eopIcaos)
+        {
+            if (String.IsNullOrEmpty(icao))
+            {
+                continue;
+            }
+            else if (icao.StartsWith("K"))
+            {
+                RegionalCoverages["US"]++;
+            }
+            else if (icao.StartsWith("C"))
+            {
+                RegionalCoverages["CAN"]++;
+            }
+            else if (icao.StartsWith("L") || icao.StartsWith("E") || icao.StartsWith("U") || icao.StartsWith("B"))
+            {
+                RegionalCoverages["EUR"]++;
+            }
+            else if (icao.StartsWith("S") || icao.StartsWith("T"))
+            {
+                RegionalCoverages["SA"]++;
+            }
+            else
+            {
+                RegionalCoverages["Rest of World"]++;
+            }
+        }
+    }
+
+    async Task RedrawGraphs()
+    {
+        await createdReviewedLineChart.Clear();
+        await createdReviewedBarChart.Clear();
+        await airportsWithEopsLineChart.Clear();
+        await regionalCoveragesBarChart.Clear();
+
+        await createdReviewedLineChart.AddLabelsDatasetsAndUpdate(LabelListWeeks, GetCumulativeCreatedReveiwedDataset());
+        await createdReviewedBarChart.AddLabelsDatasetsAndUpdate(LabelListWeeks, GetNewCreatedReviewedDataset());
+        await airportsWithEopsLineChart.AddLabelsDatasetsAndUpdate(LabelListWeeks, GetAirportWithEopsDataset());
+        await regionalCoveragesBarChart.AddLabelsDatasetsAndUpdate(LabelListRegions, GetRegionalCoveragesDataset());
+    }
+
+    #region
+    LineChartDataset<int>[] GetCumulativeCreatedReveiwedDataset()
+    {
+        return new List<LineChartDataset<int>> {
+                    new LineChartDataset<int>
+                        {
+                            Label = "Created EOPs",
+                            Data = CreatedCount,
+                            PointRadius = 3,
+                            Fill = false,
+                            BorderColor = "rgba(66,133,244,1)",
+                            BackgroundColor = "rgba(66,133,244,1)",
+                            PointBackgroundColor = Enumerable.Repeat("rgba(66,133,244,1)", CreatedCount.Count()).ToList()
+                        },
+                    new LineChartDataset<int>
+                        {
+                            Label = "Approved EOPs",
+                            Data = ReviewedCount,
+                            PointRadius = 3,
+                            Fill = false,
+                            BorderColor = "rgba(234,67,53,1)",
+                            BackgroundColor = "rgba(234,67,53,1)",
+                            PointBackgroundColor = Enumerable.Repeat("rgba(234,67,53,1)", ReviewedCount.Count()).ToList()
+                        }
+                }.ToArray();
+    }
+
+    BarChartDataset<int>[] GetNewCreatedReviewedDataset()
+    {
+        return new List<BarChartDataset<int>> {
+                    new BarChartDataset<int>
+                        {
+                            Label = "Created since last",
+                            Data = CreatedPerWeek,
+                            BackgroundColor = "rgba(66,133,244,1)"
+                        },
+                    new BarChartDataset<int>
+                        {
+                            Label = "Approved since last",
+                            Data = ReviewedPerWeek,
+                            BackgroundColor = "rgba(234,67,53,1)"
+                        }
+                }.ToArray();
+    }
+
+    LineChartDataset<int>[] GetAirportWithEopsDataset()
+    {
+        return new List<LineChartDataset<int>> {
+                    new LineChartDataset<int>
+                        {
+                            Label = "Airports with EOPs",
+                            Data = AirportsWithEopsCount,
+                            PointRadius = 3,
+                            Fill = false,
+                            BorderColor = "rgba(234,67,53,1)",
+                            BackgroundColor = "rgba(234,67,53,1)",
+                            PointBackgroundColor = Enumerable.Repeat("rgba(234,67,53,1)", AirportsWithEopsCount.Count()).ToList()
+                        }
+                }.ToArray();
+    }
+
+    BarChartDataset<int>[] GetRegionalCoveragesDataset()
+    {
+        return new List<BarChartDataset<int>> {
+                    new BarChartDataset<int>
+                        {
+                            Label = "Reagonal coverage",
+                            Data = RegionalCoverages.Values.ToList(),
+                            BackgroundColor = "rgba(234,67,53,1)"
+                        }
+                }.ToArray();
+    }
+    #endregion
 }
