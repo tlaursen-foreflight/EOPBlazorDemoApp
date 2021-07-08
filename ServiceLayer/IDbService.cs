@@ -9,6 +9,5 @@ namespace ServiceLayer
         public Task<List<EngineOutProcedure>> GetEops();
         public Task<List<Airport>> GetAirports();
         public Task<List<Runway>> GetRunways();
-        Task<int> EOPCount();
     }
 }

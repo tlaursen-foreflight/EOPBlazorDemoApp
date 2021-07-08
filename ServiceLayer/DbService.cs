@@ -28,10 +28,5 @@ namespace ServiceLayer
         {
             return _context.Runways.ToListAsync();
         }
-
-        public Task<int> EOPCount()
-        {
-            return _context.EngineOutProcedures.CountAsync();
-        }
     }
 }
