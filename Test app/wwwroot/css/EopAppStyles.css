@@ -29,6 +29,11 @@ td {
         text-align: center;
     }
 
-.table td {
+.table thead th, .table tbody td {
+    padding: 4px;
     vertical-align: middle;
+}
+
+.clickable {
+    cursor: pointer;
 }

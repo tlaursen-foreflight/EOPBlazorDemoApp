@@ -37,7 +37,7 @@
         <tr>
             <td width="25%">
                 <h6>Last updated: @UpdatedAt</h6>
-                <button class="update-btn" @onclick="updateSite" disabled="@IsUpdating">Update now</button>
+                <button class="update-btn" @onclick="UpdateSite" disabled="@IsUpdating">Update now</button>
             </td>
             <td width="25%"></td>
             <td width="25%"></td>
@@ -58,51 +58,49 @@
 
     <br />
 
-
-
     <h4 class="mt-4">Generated EOPs</h4>
-    <input @bind-value="SearchTerm" @bind-value:event="oninput" />
-    <span class="text-muted ml-5">Showing @FilteredEops.Count out of @Eops.Count</span>
+    <input @bind-value="SearchTerm" @bind-value:event="oninput" placeholder="Search for keywords" />
+    <span class="text-muted ml-5">Showing @(Math.Min(FilteredEops.Count, MaxAmountShown)) out of @Eops.Count</span>
+    <button @onclick="@(() => { MaxAmountShown = Eops.Count(); SearchTerm = ""; })" disabled="@IsUpdating">Show all</button>
     <div class="table-wrapper">
         <table class="table">
-            <thead>
+            <thead class="text-center">
                 <tr>
-                    <th>
-                        @*<span class="sort-link" onclick="@(() => SortTable("DateCreated"))">Date</span>*@
-                        ID
+                    <th class="clickable" width="80px" @onclick="@(() => SortEops(x => x.ProcedureId))">
+                        <span>ID</span>
+                        <span class="fa @GetSortIcon(x => x.ProcedureId)"></span>
                     </th>
-                    <th>
-                        @*<span class="sort-link" onclick="@(() => SortTable("DateCreated"))">Date</span>*@
+                    <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.Runway.Airport.Icao))">
                         <span>Airport ICAO</span>
+                        <span class="fa @GetSortIcon(x => x.Runway.Airport.Icao)"></span>
+                    </th>
+                    <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.Runway.Name))">
+                        <span>Runway</span>
+                        <span class="fa @GetSortIcon(x => x.Runway.Name)"></span>
+                    </th>
+                    <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.IsPublished))">
+                        <span>Published</span>
+                        <span class="fa @GetSortIcon(x => x.IsPublished)"></span>
+                    </th>
+                    <th class="clickable" width="120px" @onclick="@(() => SortEops(x => x.CreatedOn))">
+                        <span>Created</span>
+                        <span class="fa @GetSortIcon(x => x.CreatedOn)"></span>
                     </th>
                     <th>
-                        @*<span class="sort-link" onclick="@(() => SortTable("Description"))">Description</span>*@
-                        <span>Runway name</span>
-                    </th>
-                    <th>
-                        @*<span class="sort-link" onclick="@(() => SortTable("Description"))">Description</span>*@
-                        <span>Is published</span>
-                    </th>
-                    <th>
-                        @*<span class="sort-link" onclick="@(() => SortTable("Description"))">Description</span>*@
-                        <span>Created On</span>
-                    </th>
-                    <th>
-                        @*<span class="sort-link" onclick="@(() => SortTable("Description"))">Description</span>*@
                         <span>Description</span>
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var eop in FilteredEops)
+                @foreach (var eop in FilteredEops.Take(MaxAmountShown))
                 {
                     <tr>
-                        <td style="vertical-align: middle">@eop.ProcedureId</td>
-                        <td>@eop.Runway.Airport.Icao</td>
-                        <td>@eop.Runway.Name</td>
+                        <td class="text-center">@eop.ProcedureId</td>
+                        <td class="text-center">@(eop.Runway.Airport.Icao != null ? eop.Runway.Airport.Icao : "Unknown") </td>
+                        <td class="text-center">@(eop.Runway.Name != null ? eop.Runway.Name : "Unknown") </td>
                         <td class="text-center"><input type="checkbox" checked="@eop.IsPublished" onclick="return false" /></td>
-                        <td>@eop.CreatedOn.ToString()</td>
-                        <td>@eop.Description</td>
+                        <td class="text-center">@(eop.CreatedOn != null ? eop.CreatedOn.ToString("yyyy-MM-dd HH':'mm':'ss") : "Unknown") </td>
+                        <td>@(eop.Description != null ? eop.Description : "Unknown") </td>
                     </tr>
                 }
             </tbody>
@@ -114,6 +112,7 @@
 @code {
     @using ServiceLayer.Models
     @using System.Globalization
+    @using System.Linq.Expressions
 
     private int CreatedEopCount = 0;
     private int ApprovedEopCount = 0;
@@ -142,13 +141,18 @@
 
 
     string SearchTerm { get; set; } = "";
+    int MaxAmountShown = 500;
+    Func<EngineOutProcedure, IComparable> CurrentSort = x => x.CreatedOn;
+    bool IsSortedAscending = false;
     List<EngineOutProcedure> Eops = new List<EngineOutProcedure>();
-    List<EngineOutProcedure> FilteredEops => Eops.Where(i => i.ProcedureId.ToString().ToLower().Contains(SearchTerm.ToLower())).ToList();
+    List<EngineOutProcedure> FilteredEops => Eops.Where(i => (i.ProcedureId.ToString()?.ToLower().Contains(SearchTerm.ToLower()) ?? false)
+                                                          || (i.Runway.Airport.Icao?.ToLower().Contains(SearchTerm.ToLower()) ?? false)
+                                                          || (i.Description?.ToLower().Contains(SearchTerm.ToLower()) ?? false)).ToList();
 
 
     protected override async Task OnInitializedAsync()
     {
-        await updateSite();
+        await UpdateSite();
     }
 
     //protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -159,18 +163,21 @@
     //    }
     //}
 
-    private async Task updateSite()
+    private async Task UpdateSite()
     {
         IsUpdating = true;
 
-        await updateData();
+        await UpdateData();
+
+        IsSortedAscending = !IsSortedAscending;
+        SortEops(CurrentSort);
 
         await RedrawGraphs();
 
         IsUpdating = false;
     }
 
-    private async Task updateData()
+    private async Task UpdateData()
     {
         Eops = (await _db.GetEops()).Where(e => e.CreatedBy != "Internal Testing").ToList();
         UpdatedAt = DateTime.Now.ToString("yyyy-MM-dd HH':'mm':'ss");
@@ -331,4 +338,46 @@
                 }.ToArray();
     }
     #endregion
+
+    private void SortEops(Func<EngineOutProcedure, IComparable> getProp)
+    {
+        Expression<Func<EngineOutProcedure, IComparable>> sovs = x => x.ProcedureId;
+        var bnag = CurrentSort.ToString();
+        if (getProp != CurrentSort)
+        {
+            CurrentSort = getProp;
+            IsSortedAscending = true;
+            Eops = Eops.OrderBy(x => getProp(x)).ToList();
+        }
+        else
+        {
+            IsSortedAscending = !IsSortedAscending;
+            if (IsSortedAscending)
+            {
+                Eops = Eops.OrderBy(x => getProp(x)).ToList();
+            }
+            else
+            {
+                Eops = Eops.OrderByDescending(x => getProp(x)).ToList();
+            }
+        }
+    }
+
+    private string GetSortIcon(Func<EngineOutProcedure, IComparable> getProp)
+    {
+        //if (getProp != CurrentSort)
+        //{
+        //    return string.Empty;
+        //}
+        //if (IsSortedAscending)
+        //{
+        //    return "fa-sort-up";
+        //}
+        //else
+        //{
+        //    return "fa-sort-down";
+        //}
+
+        return string.Empty;
+    }
 }
