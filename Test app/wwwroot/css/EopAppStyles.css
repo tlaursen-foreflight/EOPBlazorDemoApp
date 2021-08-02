@@ -8,12 +8,10 @@
 }
 
 .table-wrapper {
-    border: 2px solid black;
     padding: 10px;
     overflow: auto;
-    height: 700px;
     margin-top: 20px;
-    margin-bottom: 100px;
+    margin-bottom: 40px;
 }
 
 td {
@@ -36,4 +34,12 @@ td {
 
 .clickable {
     cursor: pointer;
+}
+
+.k-grid .k-grid-header th .k-cell-inner,
+.k-grid .k-grid-header th .k-cell-inner > .k-link {
+    display: block;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
 }

@@ -59,53 +59,86 @@
     <br />
 
     <h4 class="mt-4">Generated EOPs</h4>
-    <input @bind-value="SearchTerm" @bind-value:event="oninput" placeholder="Search for keywords" />
+    @*<input @bind-value="SearchTerm" @bind-value:event="oninput" placeholder="Search for keywords" />
     <span class="text-muted ml-5">Showing @(Math.Min(FilteredEops.Count, MaxAmountShown)) out of @Eops.Count</span>
-    <button @onclick="@(() => { MaxAmountShown = Eops.Count(); SearchTerm = ""; })" disabled="@IsUpdating">Show all</button>
+    <button @onclick="@(() => { MaxAmountShown = Eops.Count(); SearchTerm = ""; })" disabled="@IsUpdating">Show all</button>*@
+
     <div class="table-wrapper">
-        <table class="table">
-            <thead class="text-center">
-                <tr>
-                    <th class="clickable" width="80px" @onclick="@(() => SortEops(x => x.ProcedureId))">
-                        <span>ID</span>
-                        <span class="fa @GetSortIcon(x => x.ProcedureId)"></span>
-                    </th>
-                    <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.Runway.Airport.Icao))">
-                        <span>Airport ICAO</span>
-                        <span class="fa @GetSortIcon(x => x.Runway.Airport.Icao)"></span>
-                    </th>
-                    <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.Runway.Name))">
-                        <span>Runway</span>
-                        <span class="fa @GetSortIcon(x => x.Runway.Name)"></span>
-                    </th>
-                    <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.IsPublished))">
-                        <span>Published</span>
-                        <span class="fa @GetSortIcon(x => x.IsPublished)"></span>
-                    </th>
-                    <th class="clickable" width="120px" @onclick="@(() => SortEops(x => x.CreatedOn))">
-                        <span>Created</span>
-                        <span class="fa @GetSortIcon(x => x.CreatedOn)"></span>
-                    </th>
-                    <th>
-                        <span>Description</span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var eop in FilteredEops.Take(MaxAmountShown))
-                {
-                    <tr>
-                        <td class="text-center">@eop.ProcedureId</td>
-                        <td class="text-center">@(eop.Runway.Airport.Icao != null ? eop.Runway.Airport.Icao : "Unknown") </td>
-                        <td class="text-center">@(eop.Runway.Name != null ? eop.Runway.Name : "Unknown") </td>
-                        <td class="text-center"><input type="checkbox" checked="@eop.IsPublished" onclick="return false" /></td>
-                        <td class="text-center">@(eop.CreatedOn != null ? eop.CreatedOn.ToString("yyyy-MM-dd HH':'mm':'ss") : "Unknown") </td>
-                        <td>@(eop.Description != null ? eop.Description : "Unknown") </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <TelerikGrid Data=@Eops EditMode="@GridEditMode.Inline" Height="700px"
+                     Pageable="true" PageSize="400" FilterMode="@GridFilterMode.FilterMenu"
+                     Groupable="true" Sortable="true" SortMode="@SortMode.Multiple">
+            <GridColumns>
+                <GridColumn Field=@nameof(EngineOutProcedure.ProcedureId) Title="ID" Width="100px" TextAlign="ColumnTextAlign.Center" />
+                <GridColumn Field="Runway.Airport.Icao" Title="Airport" Width="120px" TextAlign="ColumnTextAlign.Center" />
+                <GridColumn Field="Runway.Name" Title="Runway" Width="120px" TextAlign="ColumnTextAlign.Center" />
+                <GridColumn Field=@nameof(EngineOutProcedure.IsPublished) Title="Published" Width="120px" TextAlign="ColumnTextAlign.Center" >
+                    <Template>
+                        @{
+                            if ((context as EngineOutProcedure).IsPublished)
+                            {
+                                <span class="k-badge k-badge-md k-badge-solid k-badge-success k-badge-rounded">Published</span>
+                            }
+                            else
+                            {
+                                <span class="k-badge k-badge-md k-badge-solid k-badge-error k-badge-rounded">Not Published</span>
+                            }
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Field=@nameof(EngineOutProcedure.CreatedOn) Title="Created" Width="120px" TextAlign="ColumnTextAlign.Center" />
+                <GridColumn Field=@nameof(EngineOutProcedure.Description) Title="Description" />
+            </GridColumns>
+        </TelerikGrid>
     </div>
+
+
+    @*<div class="table-wrapper">
+            <table class="table">
+                <thead class="text-center">
+                    <tr>
+                        <th class="clickable" width="80px" @onclick="@(() => SortEops(x => x.ProcedureId))">
+                            <span>ID</span>
+                            <span class="fa @GetSortIcon(x => x.ProcedureId)"></span>
+                        </th>
+                        <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.Runway.Airport.Icao))">
+                            <span>Airport ICAO</span>
+                            <span class="fa @GetSortIcon(x => x.Runway.Airport.Icao)"></span>
+                        </th>
+                        <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.Runway.Name))">
+                            <span>Runway</span>
+                            <span class="fa @GetSortIcon(x => x.Runway.Name)"></span>
+                        </th>
+                        <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.IsPublished))">
+                            <span>Published</span>
+                            <span class="fa @GetSortIcon(x => x.IsPublished)"></span>
+                        </th>
+                        <th class="clickable" width="120px" @onclick="@(() => SortEops(x => x.CreatedOn))">
+                            <span>Created</span>
+                            <span class="fa @GetSortIcon(x => x.CreatedOn)"></span>
+                        </th>
+                        <th>
+                            <span>Description</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var eop in FilteredEops.Take(MaxAmountShown))
+                    {
+                        <tr>
+                            <td class="text-center">@eop.ProcedureId</td>
+                            <td class="text-center">@(eop.Runway.Airport.Icao != null ? eop.Runway.Airport.Icao : "Unknown") </td>
+                            <td class="text-center">@(eop.Runway.Name != null ? eop.Runway.Name : "Unknown") </td>
+                            <td class="text-center"><input type="checkbox" checked="@eop.IsPublished" onclick="return false" /></td>
+                            <td class="text-center">@(eop.CreatedOn != null ? eop.CreatedOn.ToString("yyyy-MM-dd HH':'mm':'ss") : "Unknown") </td>
+                            <td>@(eop.Description != null ? eop.Description : "Unknown") </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>*@
+
+
+
 </div>
 
 
