@@ -33,6 +33,8 @@ namespace Test_app
                     .AddBootstrapProviders()
                     .AddFontAwesomeIcons();
 
+            services.AddTelerikBlazor();
+
             services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(
                 pgnsqlOptions =>
                 {
