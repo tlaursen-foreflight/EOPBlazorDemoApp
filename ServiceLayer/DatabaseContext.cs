@@ -29,7 +29,7 @@ namespace ServiceLayer
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //todo move this to app settings
-            var connectionString = $"Server=dispatch-rds-qa.acqa.foreflight.com;Port=5432;Database=eopmasterRasmus;User Id={_username};Password={_password};";
+            var connectionString = $"Server=dispatch-rds-qa.acqa.foreflight.com;Port=5432;Database=eopmaster;User Id={_username};Password={_password};";
             optionsBuilder.UseNpgsql(connectionString);
         }
 

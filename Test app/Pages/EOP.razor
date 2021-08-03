@@ -3,75 +3,168 @@
 @inject IDbService _db;
 
 <div>
-    <table width="100%">
+    <table>
         <tr>
-            <td width="25%">
-                <p class="d-inline-block, float-left">Created EOPs:</p>
-                <p class="d-inline-block, float-right">@CreatedEopCount</p>
-            </td>
-            <td width="25%">
-                <p class="d-inline-block, float-left">Covered Airports:</p>
-                <p class="d-inline-block, float-right">@CoveredAirports</p>
-            </td>
-            <td width="25%">
-                <p class="d-inline-block, float-left">Created this week (w@(ISOWeek.GetWeekOfYear(DateTime.Now))):</p>
-                <p class="d-inline-block, float-right">@CreatedSinceLast</p>
-            </td>
-            <td width="25%"></td>
+            <td class="padding-right-20 larger">Created EOPs:</td>
+            <td class="padding-right-60 larger">@CreatedEopCount</td>
+            <td class="padding-right-20 larger">Covered Airports:</td>
+            <td class="padding-right-60 larger">@CoveredAirports</td>
+            <td class="padding-right-20 larger">Created this week (w@(ISOWeek.GetWeekOfYear(DateTime.Now))):</td>
+            <td class="padding-right-60 larger">@CreatedSinceLast</td>
         </tr>
         <tr>
-            <td width="25%">
-                <p class="d-inline-block, float-left">Approved EOPs:</p>
-                <p class="d-inline-block, float-right">@ApprovedEopCount</p>
-            </td>
-            <td width="25%">
-                <p class="d-inline-block, float-left">Covered Airports (approved):</p>
-                <p class="d-inline-block, float-right">@CoveredAirportsApproved</p>
-            </td>
-            <td width="25%">
-                <p class="d-inline-block, float-left">Approved this week (w@(ISOWeek.GetWeekOfYear(DateTime.Now))):</p>
-                <p class="d-inline-block, float-right">@ApprovedSinceLast</p>
-            </td>
-            <td width="25%"></td>
-        </tr>
-        <tr>
-            <td width="25%">
-                <h6>Last updated: @UpdatedAt</h6>
-                <button class="update-btn" @onclick="UpdateSite" disabled="@IsUpdating">Update now</button>
-            </td>
-            <td width="25%"></td>
-            <td width="25%"></td>
-            <td width="25%"></td>
+            <td class="padding-right-20 larger">Approved EOPs:</td>
+            <td class="padding-right-60 larger">@ApprovedEopCount</td>
+            <td class="padding-right-20 larger">Covered Airports (approved):</td>
+            <td class="padding-right-60 larger">@CoveredAirportsApproved</td>
+            <td class="padding-right-20 larger">Approved this week (w@(ISOWeek.GetWeekOfYear(DateTime.Now))):</td>
+            <td class="padding-right-60 larger">@ApprovedSinceLast</td>
         </tr>
     </table>
 
-    <table width="100%">
+    <br/>
+    <h6>Last updated: @UpdatedAt</h6>
+    <TelerikButton OnClick="@UpdateSite" Enabled="@(!IsUpdating)">Update now</TelerikButton>
+
+    <table width="100%" height="850px">
         <tr>
-            <td width="50%"><LineChart @ref="createdReviewedLineChart" TItem="int" /></td>
-            <td width="50%"><LineChart @ref="airportsWithEopsLineChart" TItem="int" /></td>
+            <td width="50%">
+                <TelerikChart Height="100%" @ref="CreatedReviewedLineChart">
+                    <ChartSeriesItems>
+                        <ChartSeries Type="ChartSeriesType.Line" Name="Created" Data="@CreatedCount.Select(x => x.ToString())" Color="rgb(66,133,244)">
+                            <ChartSeriesMarkers Size="5" />
+                        </ChartSeries>
+                        <ChartSeries Type="ChartSeriesType.Line" Name="Approved" Data="@ReviewedCount.Select(x => x.ToString())" Color="rgb(234,67,53)">
+                            <ChartSeriesMarkers Size="5" />
+                        </ChartSeries>
+                    </ChartSeriesItems>
+
+                    <ChartValueAxes>
+                        <ChartValueAxis>
+                            <ChartValueAxisTitle Text="Count"></ChartValueAxisTitle>
+                        </ChartValueAxis>
+                    </ChartValueAxes>
+
+                    <ChartCategoryAxes>
+                        <ChartCategoryAxis Categories="@LabelListWeeks.ToArray()">
+                            <ChartCategoryAxisLabels Step="2" Font="12px 'Arial'">
+                                <ChartCategoryAxisLabelsRotation Angle="-60" />
+                            </ChartCategoryAxisLabels>
+                        </ChartCategoryAxis>
+                    </ChartCategoryAxes>
+
+                    <ChartTooltip Visible="true" Shared="true" Opacity="0.75" />
+
+                    <ChartTitle Text="Total created/reviewed EOPs" />
+
+                    <ChartLegend Position="Telerik.Blazor.ChartLegendPosition.Bottom" />
+                </TelerikChart>
+            </td>
+            <td width="50%">
+                <TelerikChart Height="100%" @ref="AirportsWithEopsLineChart">
+                    <ChartSeriesItems>
+                        <ChartSeries Type="ChartSeriesType.Line" Name="Approved" Data="@AirportsWithEopsCount.Select(x => x.ToString())" Color="rgb(234,67,53)">
+                            <ChartSeriesMarkers Size="5" />
+                        </ChartSeries>
+                    </ChartSeriesItems>
+
+                    <ChartValueAxes>
+                        <ChartValueAxis>
+                            <ChartValueAxisTitle Text="Count"></ChartValueAxisTitle>
+                        </ChartValueAxis>
+                    </ChartValueAxes>
+
+                    <ChartCategoryAxes>
+                        <ChartCategoryAxis Categories="@LabelListWeeks.ToArray()">
+                            <ChartCategoryAxisLabels Step="2" Font="12px 'Arial'">
+                                <ChartCategoryAxisLabelsRotation Angle="-60" />
+                            </ChartCategoryAxisLabels>
+                        </ChartCategoryAxis>
+                    </ChartCategoryAxes>
+
+                    <ChartTooltip Visible="true" />
+
+                    <ChartTitle Text="Airports with EOPs" />
+
+                    <ChartLegend Position="Telerik.Blazor.ChartLegendPosition.Bottom" />
+                </TelerikChart>
+            </td>
         </tr>
         <tr>
-            <td width="50%"><BarChart @ref="createdReviewedBarChart" TItem="int" /></td>
-            <td width="50%"><BarChart @ref="regionalCoveragesBarChart" TItem="int" /></td>
+            <td width="50%">
+                <TelerikChart Height="100%" @ref="CreatedReviewedBarChart">
+                    <ChartSeriesItems>
+                        <ChartSeries Type="ChartSeriesType.Column" Name="Created" Data="@CreatedPerWeek.Select(x => x.ToString())" Color="rgb(66,133,244)" />
+                        <ChartSeries Type="ChartSeriesType.Column" Name="Approved" Data="@ReviewedPerWeek.Select(x => x.ToString())" Color="rgb(234,67,53)" />
+                    </ChartSeriesItems>
+
+                    <ChartValueAxes>
+                        <ChartValueAxis>
+                            <ChartValueAxisTitle Text="Count"></ChartValueAxisTitle>
+                        </ChartValueAxis>
+                    </ChartValueAxes>
+
+                    <ChartCategoryAxes>
+                        <ChartCategoryAxis Categories="@LabelListWeeks.ToArray()">
+                            <ChartCategoryAxisLabels Step="2" Font="12px 'Arial'">
+                                <ChartCategoryAxisLabelsRotation Angle="-60" />
+                            </ChartCategoryAxisLabels>
+                        </ChartCategoryAxis>
+                    </ChartCategoryAxes>
+
+                    <ChartTooltip Visible="true" Shared="true" Opacity="0.75" />
+
+                    <ChartTitle Text="Created/Reviewed per week" />
+
+                    <ChartLegend Position="Telerik.Blazor.ChartLegendPosition.Bottom" />
+                </TelerikChart>
+            </td>
+            <td width="50%">
+                <TelerikChart Height="100%" @ref="RegionalCoveragesBarChart">
+                    <ChartSeriesItems>
+                        <ChartSeries Type="ChartSeriesType.Column" Name="Approved" Data="@RegionalCoverages.Values.Select(x => x.ToString())" Color="rgb(234,67,53)">
+                            <ChartSeriesLabels Visible="true" Color="rgb(234,67,53)" />
+                        </ChartSeries>
+                    </ChartSeriesItems>
+
+                    <ChartValueAxes>
+                        <ChartValueAxis>
+                            <ChartValueAxisTitle Text="Count"></ChartValueAxisTitle>
+                        </ChartValueAxis>
+                    </ChartValueAxes>
+
+                    <ChartCategoryAxes>
+                        <ChartCategoryAxis Categories="@LabelListRegions.ToArray()" />
+                    </ChartCategoryAxes>
+
+                    <ChartTitle Text="Regional Coverage" />
+
+                    <ChartLegend Position="Telerik.Blazor.ChartLegendPosition.Bottom" />
+                </TelerikChart>
+            </td>
         </tr>
     </table>
 
     <br />
 
     <h4 class="mt-4">Generated EOPs</h4>
-    @*<input @bind-value="SearchTerm" @bind-value:event="oninput" placeholder="Search for keywords" />
-    <span class="text-muted ml-5">Showing @(Math.Min(FilteredEops.Count, MaxAmountShown)) out of @Eops.Count</span>
-    <button @onclick="@(() => { MaxAmountShown = Eops.Count(); SearchTerm = ""; })" disabled="@IsUpdating">Show all</button>*@
-
     <div class="table-wrapper">
         <TelerikGrid Data=@Eops EditMode="@GridEditMode.Inline" Height="700px"
                      Pageable="true" PageSize="400" FilterMode="@GridFilterMode.FilterMenu"
                      Groupable="true" Sortable="true" SortMode="@SortMode.Multiple">
             <GridColumns>
                 <GridColumn Field=@nameof(EngineOutProcedure.ProcedureId) Title="ID" Width="100px" TextAlign="ColumnTextAlign.Center" />
-                <GridColumn Field="Runway.Airport.Icao" Title="Airport" Width="120px" TextAlign="ColumnTextAlign.Center" />
-                <GridColumn Field="Runway.Name" Title="Runway" Width="120px" TextAlign="ColumnTextAlign.Center" />
-                <GridColumn Field=@nameof(EngineOutProcedure.IsPublished) Title="Published" Width="120px" TextAlign="ColumnTextAlign.Center" >
+                <GridColumn Field="Runway.Airport.Icao" Title="Airport" Width="120px" TextAlign="ColumnTextAlign.Center">
+                    <Template>
+                        @((context as EngineOutProcedure).Runway.Airport.Icao != null ? (context as EngineOutProcedure).Runway.Airport.Icao : "Unknown")
+                    </Template>
+                </GridColumn>
+                <GridColumn Field="Runway.Name" Title="Runway" Width="120px" TextAlign="ColumnTextAlign.Center">
+                    <Template>
+                        @((context as EngineOutProcedure).Runway.Name != null ? (context as EngineOutProcedure).Runway.Name : "Unknown")
+                    </Template>
+                </GridColumn>
+                <GridColumn Field=@nameof(EngineOutProcedure.IsPublished) Title="Published" Width="120px" TextAlign="ColumnTextAlign.Center">
                     <Template>
                         @{
                             if ((context as EngineOutProcedure).IsPublished)
@@ -85,59 +178,19 @@
                         }
                     </Template>
                 </GridColumn>
-                <GridColumn Field=@nameof(EngineOutProcedure.CreatedOn) Title="Created" Width="120px" TextAlign="ColumnTextAlign.Center" />
-                <GridColumn Field=@nameof(EngineOutProcedure.Description) Title="Description" />
+                <GridColumn Field=@nameof(EngineOutProcedure.CreatedOn) Title="Created" Width="120px" TextAlign="ColumnTextAlign.Center">
+                    <Template>
+                        @((context as EngineOutProcedure).CreatedOn != null ? (context as EngineOutProcedure).CreatedOn.ToString("yyyy/MM/dd HH':'mm") : "Unknown")
+                    </Template>
+                </GridColumn>
+                <GridColumn Field=@nameof(EngineOutProcedure.Description) Title="Description">
+                    <Template>
+                        @((context as EngineOutProcedure).Description != null ? (context as EngineOutProcedure).Description : "Unknown")
+                    </Template>
+                </GridColumn>
             </GridColumns>
         </TelerikGrid>
     </div>
-
-
-    @*<div class="table-wrapper">
-            <table class="table">
-                <thead class="text-center">
-                    <tr>
-                        <th class="clickable" width="80px" @onclick="@(() => SortEops(x => x.ProcedureId))">
-                            <span>ID</span>
-                            <span class="fa @GetSortIcon(x => x.ProcedureId)"></span>
-                        </th>
-                        <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.Runway.Airport.Icao))">
-                            <span>Airport ICAO</span>
-                            <span class="fa @GetSortIcon(x => x.Runway.Airport.Icao)"></span>
-                        </th>
-                        <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.Runway.Name))">
-                            <span>Runway</span>
-                            <span class="fa @GetSortIcon(x => x.Runway.Name)"></span>
-                        </th>
-                        <th class="clickable" width="100px" @onclick="@(() => SortEops(x => x.IsPublished))">
-                            <span>Published</span>
-                            <span class="fa @GetSortIcon(x => x.IsPublished)"></span>
-                        </th>
-                        <th class="clickable" width="120px" @onclick="@(() => SortEops(x => x.CreatedOn))">
-                            <span>Created</span>
-                            <span class="fa @GetSortIcon(x => x.CreatedOn)"></span>
-                        </th>
-                        <th>
-                            <span>Description</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var eop in FilteredEops.Take(MaxAmountShown))
-                    {
-                        <tr>
-                            <td class="text-center">@eop.ProcedureId</td>
-                            <td class="text-center">@(eop.Runway.Airport.Icao != null ? eop.Runway.Airport.Icao : "Unknown") </td>
-                            <td class="text-center">@(eop.Runway.Name != null ? eop.Runway.Name : "Unknown") </td>
-                            <td class="text-center"><input type="checkbox" checked="@eop.IsPublished" onclick="return false" /></td>
-                            <td class="text-center">@(eop.CreatedOn != null ? eop.CreatedOn.ToString("yyyy-MM-dd HH':'mm':'ss") : "Unknown") </td>
-                            <td>@(eop.Description != null ? eop.Description : "Unknown") </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>*@
-
-
 
 </div>
 
@@ -145,7 +198,6 @@
 @code {
     @using ServiceLayer.Models
     @using System.Globalization
-    @using System.Linq.Expressions
 
     private int CreatedEopCount = 0;
     private int ApprovedEopCount = 0;
@@ -157,10 +209,10 @@
     private string UpdatedAt = "";
     private bool IsUpdating = false;
 
-    LineChart<int> createdReviewedLineChart;
-    BarChart<int> createdReviewedBarChart;
-    LineChart<int> airportsWithEopsLineChart;
-    BarChart<int> regionalCoveragesBarChart;
+    public TelerikChart CreatedReviewedLineChart { get; set; }
+    public TelerikChart CreatedReviewedBarChart { get; set; }
+    public TelerikChart AirportsWithEopsLineChart { get; set; }
+    public TelerikChart RegionalCoveragesBarChart { get; set; }
 
     private List<string> LabelListWeeks = new List<string>();
     private List<string> LabelListRegions = new List<string> { "US", "CAN", "EUR", "SA", "Rest of World" };
@@ -172,15 +224,7 @@
     private List<int> AirportsWithEopsCount = new List<int>();
     private Dictionary<string, int> RegionalCoverages = new Dictionary<string, int>();
 
-
-    string SearchTerm { get; set; } = "";
-    int MaxAmountShown = 500;
-    Func<EngineOutProcedure, IComparable> CurrentSort = x => x.CreatedOn;
-    bool IsSortedAscending = false;
     List<EngineOutProcedure> Eops = new List<EngineOutProcedure>();
-    List<EngineOutProcedure> FilteredEops => Eops.Where(i => (i.ProcedureId.ToString()?.ToLower().Contains(SearchTerm.ToLower()) ?? false)
-                                                          || (i.Runway.Airport.Icao?.ToLower().Contains(SearchTerm.ToLower()) ?? false)
-                                                          || (i.Description?.ToLower().Contains(SearchTerm.ToLower()) ?? false)).ToList();
 
 
     protected override async Task OnInitializedAsync()
@@ -202,12 +246,17 @@
 
         await UpdateData();
 
-        IsSortedAscending = !IsSortedAscending;
-        SortEops(CurrentSort);
-
-        await RedrawGraphs();
+        RedrawGraphs();
 
         IsUpdating = false;
+    }
+
+    void RedrawGraphs()
+    {
+        CreatedReviewedLineChart.Refresh();
+        CreatedReviewedBarChart.Refresh();
+        AirportsWithEopsLineChart.Refresh();
+        RegionalCoveragesBarChart.Refresh();
     }
 
     private async Task UpdateData()
@@ -220,8 +269,8 @@
         CoveredAirports = Eops.GroupBy(e => e.Runway.Airport).Count();
         CoveredAirportsApproved = Eops.Where(e => e.IsPublished && !e.IsDeleted).GroupBy(e => e.Runway.Airport).Count();
         CreatedSinceLast = Eops.Where(e => e.CreatedOn > DateTime.Now.AddDays(-((int)DateTime.Now.DayOfWeek - 1)).Date).Count();
-        ApprovedSinceLast = Eops.Where(e => e.CreatedOn > DateTime.Now.AddDays(-((int)DateTime.Now.DayOfWeek - 1)).Date && e.IsPublished && e.IsDeleted).Count();
-
+        ApprovedSinceLast = Eops.Where(e => e.ReviewedOn > DateTime.Now.AddDays(-((int)DateTime.Now.DayOfWeek - 1)).Date && e.IsPublished && !e.IsDeleted).Count();
+        var bnag = DateTime.Now.AddDays(-((int)DateTime.Now.DayOfWeek - 1)).Date;
         CreatedCount = new List<int>();
         ReviewedCount = new List<int>();
         CreatedPerWeek = new List<int>();
@@ -283,134 +332,5 @@
                 RegionalCoverages["Rest of World"]++;
             }
         }
-    }
-
-    async Task RedrawGraphs()
-    {
-        await createdReviewedLineChart.Clear();
-        await createdReviewedBarChart.Clear();
-        await airportsWithEopsLineChart.Clear();
-        await regionalCoveragesBarChart.Clear();
-
-        await createdReviewedLineChart.AddLabelsDatasetsAndUpdate(LabelListWeeks, GetCumulativeCreatedReveiwedDataset());
-        await createdReviewedBarChart.AddLabelsDatasetsAndUpdate(LabelListWeeks, GetNewCreatedReviewedDataset());
-        await airportsWithEopsLineChart.AddLabelsDatasetsAndUpdate(LabelListWeeks, GetAirportWithEopsDataset());
-        await regionalCoveragesBarChart.AddLabelsDatasetsAndUpdate(LabelListRegions, GetRegionalCoveragesDataset());
-    }
-
-    #region
-    LineChartDataset<int>[] GetCumulativeCreatedReveiwedDataset()
-    {
-        return new List<LineChartDataset<int>> {
-                    new LineChartDataset<int>
-                        {
-                            Label = "Created EOPs",
-                            Data = CreatedCount,
-                            PointRadius = 3,
-                            Fill = false,
-                            BorderColor = "rgba(66,133,244,1)",
-                            BackgroundColor = "rgba(66,133,244,1)",
-                            PointBackgroundColor = Enumerable.Repeat("rgba(66,133,244,1)", CreatedCount.Count()).ToList()
-                        },
-                    new LineChartDataset<int>
-                        {
-                            Label = "Approved EOPs",
-                            Data = ReviewedCount,
-                            PointRadius = 3,
-                            Fill = false,
-                            BorderColor = "rgba(234,67,53,1)",
-                            BackgroundColor = "rgba(234,67,53,1)",
-                            PointBackgroundColor = Enumerable.Repeat("rgba(234,67,53,1)", ReviewedCount.Count()).ToList()
-                        }
-                }.ToArray();
-    }
-
-    BarChartDataset<int>[] GetNewCreatedReviewedDataset()
-    {
-        return new List<BarChartDataset<int>> {
-                    new BarChartDataset<int>
-                        {
-                            Label = "Created since last",
-                            Data = CreatedPerWeek,
-                            BackgroundColor = "rgba(66,133,244,1)"
-                        },
-                    new BarChartDataset<int>
-                        {
-                            Label = "Approved since last",
-                            Data = ReviewedPerWeek,
-                            BackgroundColor = "rgba(234,67,53,1)"
-                        }
-                }.ToArray();
-    }
-
-    LineChartDataset<int>[] GetAirportWithEopsDataset()
-    {
-        return new List<LineChartDataset<int>> {
-                    new LineChartDataset<int>
-                        {
-                            Label = "Airports with EOPs",
-                            Data = AirportsWithEopsCount,
-                            PointRadius = 3,
-                            Fill = false,
-                            BorderColor = "rgba(234,67,53,1)",
-                            BackgroundColor = "rgba(234,67,53,1)",
-                            PointBackgroundColor = Enumerable.Repeat("rgba(234,67,53,1)", AirportsWithEopsCount.Count()).ToList()
-                        }
-                }.ToArray();
-    }
-
-    BarChartDataset<int>[] GetRegionalCoveragesDataset()
-    {
-        return new List<BarChartDataset<int>> {
-                    new BarChartDataset<int>
-                        {
-                            Label = "Reagonal coverage",
-                            Data = RegionalCoverages.Values.ToList(),
-                            BackgroundColor = "rgba(234,67,53,1)"
-                        }
-                }.ToArray();
-    }
-    #endregion
-
-    private void SortEops(Func<EngineOutProcedure, IComparable> getProp)
-    {
-        Expression<Func<EngineOutProcedure, IComparable>> sovs = x => x.ProcedureId;
-        var bnag = CurrentSort.ToString();
-        if (getProp != CurrentSort)
-        {
-            CurrentSort = getProp;
-            IsSortedAscending = true;
-            Eops = Eops.OrderBy(x => getProp(x)).ToList();
-        }
-        else
-        {
-            IsSortedAscending = !IsSortedAscending;
-            if (IsSortedAscending)
-            {
-                Eops = Eops.OrderBy(x => getProp(x)).ToList();
-            }
-            else
-            {
-                Eops = Eops.OrderByDescending(x => getProp(x)).ToList();
-            }
-        }
-    }
-
-    private string GetSortIcon(Func<EngineOutProcedure, IComparable> getProp)
-    {
-        //if (getProp != CurrentSort)
-        //{
-        //    return string.Empty;
-        //}
-        //if (IsSortedAscending)
-        //{
-        //    return "fa-sort-up";
-        //}
-        //else
-        //{
-        //    return "fa-sort-down";
-        //}
-
-        return string.Empty;
     }
 }
