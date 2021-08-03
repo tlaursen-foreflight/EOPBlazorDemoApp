@@ -45,3 +45,26 @@ td {
     margin-left: 0;
     margin-right: 0;
 }
+
+.k-window {
+    max-width: 500px;
+}
+
+.k-dialog-titlebar {
+    background-color: #ffffff;
+    padding: 0;
+    border: 0;
+}
+
+.k-button .k-i-close {
+    color: black;
+}
+
+.k-window-content {
+    white-space: pre-line;
+    font-family: "Courier New", monospace;
+}
+
+.k-window ::selection {
+    background-color: #007bff;
+}

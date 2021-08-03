@@ -22,7 +22,7 @@
         </tr>
     </table>
 
-    <br/>
+    <br />
     <h6>Last updated: @UpdatedAt</h6>
     <TelerikButton OnClick="@UpdateSite" Enabled="@(!IsUpdating)">Update now</TelerikButton>
 
@@ -149,11 +149,11 @@
 
     <h4 class="mt-4">Generated EOPs</h4>
     <div class="table-wrapper">
-        <TelerikGrid Data=@Eops EditMode="@GridEditMode.Inline" Height="700px"
+        <TelerikGrid Data=@Eops @ref="EopGrid" EditMode="@GridEditMode.Inline" Height="700px"
                      Pageable="true" PageSize="400" FilterMode="@GridFilterMode.FilterMenu"
                      Groupable="true" Sortable="true" SortMode="@SortMode.Multiple">
             <GridColumns>
-                <GridColumn Field=@nameof(EngineOutProcedure.ProcedureId) Title="ID" Width="100px" TextAlign="ColumnTextAlign.Center" />
+                <GridColumn Field=@nameof(EngineOutProcedure.ProcedureId) Title="ID" Width="60px" TextAlign="ColumnTextAlign.Center" />
                 <GridColumn Field="Runway.Airport.Icao" Title="Airport" Width="120px" TextAlign="ColumnTextAlign.Center">
                     <Template>
                         @((context as EngineOutProcedure).Runway.Airport.Icao != null ? (context as EngineOutProcedure).Runway.Airport.Icao : "Unknown")
@@ -188,9 +188,21 @@
                         @((context as EngineOutProcedure).Description != null ? (context as EngineOutProcedure).Description : "Unknown")
                     </Template>
                 </GridColumn>
+
+                <GridCommandColumn Width="100px" Locked="true" Resizable="false">
+                    <GridCommandButton Icon="file-txt" OnClick="@ViewEopHandler">View</GridCommandButton>
+                </GridCommandColumn>
             </GridColumns>
         </TelerikGrid>
     </div>
+
+
+    <TelerikWindow Modal="true" @bind-Visible="@isModalVisible" Draggable="false">
+        <WindowContent>@SelectedEopDesc</WindowContent>
+        <WindowActions>
+            <WindowAction Name="Close" />
+        </WindowActions>
+    </TelerikWindow>
 
 </div>
 
@@ -213,6 +225,7 @@
     public TelerikChart CreatedReviewedBarChart { get; set; }
     public TelerikChart AirportsWithEopsLineChart { get; set; }
     public TelerikChart RegionalCoveragesBarChart { get; set; }
+    public TelerikGrid<EngineOutProcedure> EopGrid { get; set; }
 
     private List<string> LabelListWeeks = new List<string>();
     private List<string> LabelListRegions = new List<string> { "US", "CAN", "EUR", "SA", "Rest of World" };
@@ -225,6 +238,10 @@
     private Dictionary<string, int> RegionalCoverages = new Dictionary<string, int>();
 
     List<EngineOutProcedure> Eops = new List<EngineOutProcedure>();
+
+
+    public bool isModalVisible { get; set; }
+    public string SelectedEopDesc { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -246,23 +263,15 @@
 
         await UpdateData();
 
-        RedrawGraphs();
+        StateHasChanged();
 
         IsUpdating = false;
-    }
-
-    void RedrawGraphs()
-    {
-        CreatedReviewedLineChart.Refresh();
-        CreatedReviewedBarChart.Refresh();
-        AirportsWithEopsLineChart.Refresh();
-        RegionalCoveragesBarChart.Refresh();
     }
 
     private async Task UpdateData()
     {
         Eops = (await _db.GetEops()).Where(e => e.CreatedBy != "Internal Testing").ToList();
-        UpdatedAt = DateTime.Now.ToString("yyyy-MM-dd HH':'mm':'ss");
+        UpdatedAt = DateTime.Now.ToString("yyyy/MM/dd HH':'mm':'ss");
 
         CreatedEopCount = Eops.Count();
         ApprovedEopCount = Eops.Where(e => e.IsPublished && !e.IsDeleted).Count();
@@ -332,5 +341,11 @@
                 RegionalCoverages["Rest of World"]++;
             }
         }
+    }
+
+    void ViewEopHandler(GridCommandEventArgs args)
+    {
+        isModalVisible = true;
+        SelectedEopDesc = (args.Item as EngineOutProcedure).Description;
     }
 }
