@@ -6,34 +6,28 @@ namespace ServiceLayer
 {
     public class DatabaseContext : DbContext
     {
-        //Todo probably not the way to do this
-        private static string _username;
-        private static string _password;
+        private readonly string m_connectionString;
 
-        public static void SetCredentials(string username, string password)
+        public DatabaseContext(string connectionString)
         {
-            _password = password;
-            _username = username;
-        }
-        
-        
-        public DatabaseContext()
-        {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new ArgumentException($"'{nameof(connectionString)}' cannot be null or empty", nameof(connectionString));
+            }
+
+            m_connectionString = connectionString;
         }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
         }
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //todo move this to app settings
-            var connectionString = $"Server=dispatch-rds-qa.acqa.foreflight.com;Port=5432;Database=eopmaster;User Id={_username};Password={_password};";
-            optionsBuilder.UseNpgsql(connectionString);
+            optionsBuilder.UseNpgsql(m_connectionString);
         }
 
-        
 
         public virtual DbSet<Airport> Airports { get; set; }
         public virtual DbSet<AnalysisRun> AnalysisRuns { get; set; }

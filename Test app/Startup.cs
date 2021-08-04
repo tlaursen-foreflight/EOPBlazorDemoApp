@@ -27,7 +27,7 @@ namespace Test_app
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddScoped<IDbService, DbService>();
+            services.AddScoped<IDbService, DbService>(_ => new DbService(Configuration.GetValue<string>("masterDbConnectionString")));
 
             services.AddBlazorise(options => { options.ChangeTextOnKeyPress = true; })
                     .AddBootstrapProviders()

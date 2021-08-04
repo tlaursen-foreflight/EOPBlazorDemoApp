@@ -145,10 +145,8 @@
         </tr>
     </table>
 
-    <br />
-
-    <h4 class="mt-4">Generated EOPs</h4>
     <div class="table-wrapper">
+        <h4 class="mt-4">Generated EOPs</h4>
         <TelerikGrid Data=@Eops @ref="EopGrid" EditMode="@GridEditMode.Inline" Height="700px"
                      Pageable="true" PageSize="400" FilterMode="@GridFilterMode.FilterMenu"
                      Groupable="true" Sortable="true" SortMode="@SortMode.Multiple">
@@ -211,6 +209,8 @@
     @using ServiceLayer.Models
     @using System.Globalization
 
+    List<EngineOutProcedure> Eops = new List<EngineOutProcedure>();
+
     private int CreatedEopCount = 0;
     private int ApprovedEopCount = 0;
     private int CoveredAirports = 0;
@@ -237,8 +237,6 @@
     private List<int> AirportsWithEopsCount = new List<int>();
     private Dictionary<string, int> RegionalCoverages = new Dictionary<string, int>();
 
-    List<EngineOutProcedure> Eops = new List<EngineOutProcedure>();
-
 
     public bool isModalVisible { get; set; }
     public string SelectedEopDesc { get; set; }
@@ -248,14 +246,6 @@
     {
         await UpdateSite();
     }
-
-    //protected override async Task OnAfterRenderAsync(bool firstRender)
-    //{
-    //    if (firstRender)
-    //    {
-    //        //await RedrawGraphs();
-    //    }
-    //}
 
     private async Task UpdateSite()
     {

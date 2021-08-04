@@ -1,21 +1,83 @@
 ﻿@page "/"
 @inject IJSRuntime _runtime
+@inject IDbService _db;
+@inject NavigationManager NavigationManager
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<div class="login-wrapper">
+    <div class="card">
+        <h4 class="card-header">Login</h4>
+        <div class="card-body">
+            <EditForm Model="@loginModel" OnValidSubmit="OnValidSubmit">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label>Username</label>
+                    <InputText @bind-Value="loginModel.Username" class="form-control" />
+                    <ValidationMessage For="@(() => loginModel.Username)" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <InputText @bind-Value="loginModel.Password" type="password" class="form-control" />
+                    <ValidationMessage For="@(() => loginModel.Password)" />
+                </div>
+                <button disabled="@loading" class="btn btn-primary">
+                    @if (loading)
+                    {
+                        <span class="spinner-border spinner-border-sm mr-1"></span>
+                    }
+                    Login
+                </button>
+            </EditForm>
+        </div>
+    </div>
+    @if (!String.IsNullOrEmpty(AlertMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @AlertMessage
+        </div>
+    }
+</div>
 
 
 @code
 {
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    @using ServiceLayer.Models
+    @using Npgsql
+
+    private Login loginModel = new Login();
+    private bool loading;
+    private string AlertMessage;
+
+    private async void OnValidSubmit()
     {
-        //Todo better credentials prompting
+        loading = true;
+        AlertMessage = "";
+        try
+        {
+            _db.SetDbContext(loginModel.Username, loginModel.Password);
+            var access = await _db.CheckDbAccess();
 
-        var username = await _runtime.InvokeAsync<string>("prompt", "Database Username:");
-        var password = await _runtime.InvokeAsync<string>("prompt", "Database Password:");
-
-        DatabaseContext.SetCredentials(username, password);
-        await base.OnAfterRenderAsync(firstRender);
+            if (access)
+            {
+                NavigationManager.NavigateTo("eop");
+            }
+            else
+            {
+                AlertMessage = "Error. Try again.";
+            }
+            loading = false;
+        }
+        catch (NpgsqlException ex)
+        {
+            AlertMessage = ex.Message;
+        }
+        catch (InvalidOperationException ex)
+        {
+            AlertMessage = ex.Message;
+        }
+        finally
+        {
+            loading = false;
+            StateHasChanged();
+        }
     }
 }

@@ -63,8 +63,18 @@ td {
 .k-window-content {
     white-space: pre-line;
     font-family: "Courier New", monospace;
+    font-size: large;
 }
 
 .k-window ::selection {
     background-color: #007bff;
+}
+
+.login-wrapper {
+    max-width: 480px;
+    margin: auto;
+}
+
+.alert {
+    margin: 10px;
 }
