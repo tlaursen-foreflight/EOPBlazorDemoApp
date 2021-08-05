@@ -1,34 +1,14 @@
 ﻿@page "/"
-@inject IJSRuntime _runtime
-@inject IDbService _db;
 @inject NavigationManager NavigationManager
+@inject IDbService _db;
 
 <div class="login-wrapper">
-    <div class="card">
-        <h4 class="card-header">Login</h4>
-        <div class="card-body">
-            <EditForm Model="@loginModel" OnValidSubmit="OnValidSubmit">
-                <DataAnnotationsValidator />
-                <div class="form-group">
-                    <label>Username</label>
-                    <InputText @bind-Value="loginModel.Username" class="form-control" />
-                    <ValidationMessage For="@(() => loginModel.Username)" />
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <InputText @bind-Value="loginModel.Password" type="password" class="form-control" />
-                    <ValidationMessage For="@(() => loginModel.Password)" />
-                </div>
-                <button disabled="@loading" class="btn btn-primary">
-                    @if (loading)
-                    {
-                        <span class="spinner-border spinner-border-sm mr-1"></span>
-                    }
-                    Login
-                </button>
-            </EditForm>
+    @if (loading)
+    {
+        <div class="loading-icon">
+            <span class="spinner-border spinner-border-sm mr-1"></span>
         </div>
-    </div>
+    }
     @if (!String.IsNullOrEmpty(AlertMessage))
     {
         <div class="alert alert-danger" role="alert">
@@ -37,25 +17,21 @@
     }
 </div>
 
-
 @code
 {
-    @using ServiceLayer.Models
     @using Npgsql
 
-    private Login loginModel = new Login();
     private bool loading;
     private string AlertMessage;
 
-    private async void OnValidSubmit()
+    protected override async Task OnInitializedAsync()
     {
-        loading = true;
         AlertMessage = "";
+        loading = true;
+
         try
         {
-            _db.SetDbContext(loginModel.Username, loginModel.Password);
             var access = await _db.CheckDbAccess();
-
             if (access)
             {
                 NavigationManager.NavigateTo("eop");
@@ -64,7 +40,6 @@
             {
                 AlertMessage = "Error. Try again.";
             }
-            loading = false;
         }
         catch (NpgsqlException ex)
         {
@@ -74,10 +49,13 @@
         {
             AlertMessage = ex.Message;
         }
-        finally
-        {
-            loading = false;
-            StateHasChanged();
-        }
+        loading = false;
+        StateHasChanged();
     }
+
+
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //}
+
 }

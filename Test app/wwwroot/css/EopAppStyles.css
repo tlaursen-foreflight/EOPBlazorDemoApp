@@ -75,6 +75,11 @@ td {
     margin: auto;
 }
 
+.loading-icon {
+    max-width: 40px;
+    margin: auto;
+}
+
 .alert {
     margin: 10px;
 }

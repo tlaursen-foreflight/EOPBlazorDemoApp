@@ -6,28 +6,15 @@ namespace ServiceLayer
 {
     public class DatabaseContext : DbContext
     {
-        private readonly string m_connectionString;
 
-        public DatabaseContext(string connectionString)
+        public DatabaseContext()
         {
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new ArgumentException($"'{nameof(connectionString)}' cannot be null or empty", nameof(connectionString));
-            }
-
-            m_connectionString = connectionString;
         }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(m_connectionString);
-        }
-
 
         public virtual DbSet<Airport> Airports { get; set; }
         public virtual DbSet<AnalysisRun> AnalysisRuns { get; set; }

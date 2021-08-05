@@ -6,9 +6,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer;
-using Blazorise;
-using Blazorise.Bootstrap;
-using Blazorise.Icons.FontAwesome;
+using ServiceLayer.CloudSecurityAWS;
 
 namespace Test_app
 {
@@ -27,15 +25,18 @@ namespace Test_app
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddScoped<IDbService, DbService>(_ => new DbService(Configuration.GetValue<string>("masterDbConnectionString")));
 
-            services.AddBlazorise(options => { options.ChangeTextOnKeyPress = true; })
-                    .AddBootstrapProviders()
-                    .AddFontAwesomeIcons();
+            services.AddScoped<IDbService, DbService>();
 
             services.AddTelerikBlazor();
 
+            var keyVaultHandler = Initializer.InitAWSKeyVaultHandler();
+            var masterDbUsername = keyVaultHandler.GetSecretValue("EOPMasterUsername");
+            var masterDbPassword = keyVaultHandler.GetSecretValue("EOPMasterPassword");
+            var connectionString = Configuration.GetValue<string>("masterDbConnectionString");
+            connectionString = string.Format(connectionString, masterDbUsername, masterDbPassword);
             services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(
+                connectionString,
                 pgnsqlOptions =>
                 {
                     pgnsqlOptions.EnableRetryOnFailure();

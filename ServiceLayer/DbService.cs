@@ -10,29 +10,12 @@ namespace ServiceLayer
 {
     public class DbService : IDbService
     {
-        private readonly string m_connectionString;
         private DatabaseContext _context;
 
-        public DbService(string connectionStringBase)
+        public DbService(DatabaseContext context)
         {
-            m_connectionString = connectionStringBase;
+            _context = context;
         }
-
-        public void SetDbContext(string username, string password)
-        {
-            if (string.IsNullOrEmpty(username))
-            {
-                throw new ArgumentException($"'{nameof(username)}' cannot be null or empty", nameof(username));
-            }
-            else if (string.IsNullOrEmpty(password))
-            {
-                throw new ArgumentException($"'{nameof(password)}' cannot be null or empty", nameof(password));
-            }
-
-            var connectionString = string.Format(m_connectionString, username, password);
-            _context = new DatabaseContext(connectionString);
-        }
-
         public async Task<bool> CheckDbAccess()
         {
             try
